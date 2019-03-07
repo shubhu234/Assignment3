@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">StudentManagementSystem</string>
+    <string name="cancel">cancel</string>
+    <string name="no_student_yet">No Student Yet</string>
+    <string name="add_student1">Add Student</string>
+    <string name="add_student">Add Student</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_roll_no">Enter Roll no.</string>
+    <string name="save">Save</string>
+    <string name="switch_button_title">switch_button_title</string>
+    <string name="sort_by_name">Sort By Name</string>
+    <string name="sort_by_roll_no">Sort By Roll No</string>
+</resources>
