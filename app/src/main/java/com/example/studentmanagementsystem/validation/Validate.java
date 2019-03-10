@@ -2,12 +2,13 @@
 Validation class to validate the name, roll no
  */
 package com.example.studentmanagementsystem.validation;
-import com.example.studentmanagementsystem.activity.MainActivity;
+
 import com.example.studentmanagementsystem.model.Student;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validate {
+public final class Validate {
      //method- validate name to validate the name
      //@param name
      public static boolean validateName(String name)
@@ -28,9 +29,9 @@ public class Validate {
     }
     //method isUnique- to validate the unique roll no or not
     //@param-rollno
-    public static boolean isUnique(String rollno)
+    public static boolean isUnique(ArrayList<Student> studentArrayList ,String rollno)
     {
-        for(Student student: MainActivity.studentArrayList)
+        for(Student student:studentArrayList)
         {
             if(student.getRollNo().equals(rollno)){
                 return false;

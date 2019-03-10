@@ -1,3 +1,6 @@
+/*
+SortRoll class to sort the student on the basis of roll no using the comparator
+ */
 package com.example.studentmanagementsystem.comparator;
 
 import com.example.studentmanagementsystem.model.Student;

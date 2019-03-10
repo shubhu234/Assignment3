@@ -10,7 +10,7 @@
         android:id="@+id/tv_addstudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add_student1"
+        android:text="@string/add_student"
         android:textSize="@dimen/text_add_student_textsize"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
@@ -29,7 +29,6 @@
         android:hint="@string/enter_roll_no"
         android:inputType="number"
         android:layout_below="@id/et_name"
-
         />
 
     <Button

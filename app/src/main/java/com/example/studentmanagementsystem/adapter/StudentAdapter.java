@@ -1,3 +1,6 @@
+/*
+StudentAdapter class for appearing the items in a list using recycler view
+ */
 package com.example.studentmanagementsystem.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

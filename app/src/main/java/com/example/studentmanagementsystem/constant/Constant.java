@@ -1,5 +1,5 @@
+// Constant class for declaring the constant values
 package com.example.studentmanagementsystem.constant;
-
 public class Constant {
 
     public static final String VIEW="View";

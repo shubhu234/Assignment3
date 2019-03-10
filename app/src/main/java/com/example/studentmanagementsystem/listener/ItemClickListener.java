@@ -1,3 +1,6 @@
+/*
+ItemClickListener class for clicking the items of the recycler view
+ */
 package com.example.studentmanagementsystem.listener;
 
 import android.content.Context;

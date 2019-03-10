@@ -2,7 +2,6 @@
     <string name="app_name">StudentManagementSystem</string>
     <string name="cancel">cancel</string>
     <string name="no_student_yet">No Student Yet</string>
-    <string name="add_student1">Add Student</string>
     <string name="add_student">Add Student</string>
     <string name="enter_name">Enter Name</string>
     <string name="enter_roll_no">Enter Roll no.</string>
@@ -10,4 +9,21 @@
     <string name="switch_button_title">switch_button_title</string>
     <string name="sort_by_name">Sort By Name</string>
     <string name="sort_by_roll_no">Sort By Roll No</string>
+    <string name="Constant_StudentDetails">Details of the student</string>
+    <string name="Constant_StudentDetailsView">Existing details of the student to view</string>
+    <string name="Constant_StudentDetailsEdit">Edit the details of Existing student</string>
+    <string name="Constant_studentDetailsAdd">Add the details of the  Student</string>
+    <string name="Constant_ValidName">Please enter a valid name</string>
+    <string name="Constant_ValidRollNo">Please enter a valid roll no</string>
+    <string name="Constant_UniqueRollNo">Please enter a unique roll no</string>
+    <string name="Constant_EditDetails">Edit details of the student</string>
+    <string name="Constant_Update">Update</string>
+    <string name="Constant_View">View</string>
+    <string name="Constant_Edit">Edit</string>
+    <string name="Constant_Delete">Delete</string>
+    <string name="Constant_ArrayList">ArrayList</string>
+    <string name="Constant_Operations">Choose the operation you want to perform</string>
+    <string name="Constant_Choose">You have choosen</string>
+    <string name="Constant_DeletedSuccesfully">Do you really want to delete this record</string>
+    <string name="Constant_Deleted">You have successfully deleted the record</string>
 </resources>
