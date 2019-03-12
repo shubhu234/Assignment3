@@ -18,7 +18,6 @@
     <string name="Constant_UniqueRollNo">Please enter a unique roll no</string>
     <string name="Constant_EditDetails">Edit details of the student</string>
     <string name="Constant_Update">Update</string>
-    <string name="Constant_View">View</string>
     <string name="Constant_Edit">Edit</string>
     <string name="Constant_Delete">Delete</string>
     <string name="Constant_ArrayList">ArrayList</string>

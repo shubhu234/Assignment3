@@ -7,6 +7,7 @@ There is a switch button which toggles between the grid view and the list view
  */
 package com.example.studentmanagementsystem.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.studentmanagementsystem.constant.Constant;
 import com.example.studentmanagementsystem.listener.ItemClickListener;
@@ -41,13 +43,14 @@ public class MainActivity extends AppCompatActivity {
     private static final int VIEW=0;
     private static final int EDIT=1;
     private static final int DELETE=2;
-    private Button mAddStudent;
+    private Button mButtonAddStudent;
     private RecyclerView mRecyclerView;
     private StudentAdapter mAdapter;
     private Student student;
+    private TextView mTextViewNoStudent;
+    private Intent mIntentAddStudentDetail;
     private int position1;
-    RelativeLayout mEmptyLayout;
-    final String itemDialog[] = {"View","Edit","Delete"};
+    private static final String itemDialog[]={Constant.VIEW,Constant.EDIT,Constant.DELETE};
     private ArrayList<Student> studentArrayList = new ArrayList<>();
 
     @Override
@@ -61,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewHandler();
 
 
-        mAddStudent.setOnClickListener(new View.OnClickListener() {
+        mButtonAddStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddStudent.class);
-                intent.putExtra(getString(R.string.Constant_ArrayList),studentArrayList);
-                startActivityForResult(intent, 1);
+                mIntentAddStudentDetail= createIntent(AddStudentActivity.class);
+                mIntentAddStudentDetail.putExtra(getString(R.string.Constant_ArrayList),studentArrayList);
+                startActivityForResult(mIntentAddStudentDetail, Constant.REQUESTCODE_SETDATA);
             }
         });
 
@@ -74,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
     //method for initialization of the variables
     private void init()
     {
-        mEmptyLayout = (RelativeLayout) findViewById(R.id.textview_msg);
-        mAddStudent = (Button) findViewById(R.id.btn_addStudent);
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_recyclerView);
+        mTextViewNoStudent = findViewById(R.id.tv_no_student);
+        mButtonAddStudent =  findViewById(R.id.btn_addStudent);
+        mRecyclerView =  findViewById(R.id.rv_recyclerView);
     }
     /*
     method- recyclerViewHandler
-    It lists the student name name and roll no in the list format
-    On clicking the item dialog box appears to view,edit and delete the student record
+    It lists the student name and roll no in the list format
+    On clicking the item a dialog box appears to view,edit and delete the student record
      */
     private void recyclerViewHandler()
     {
@@ -92,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.addOnItemTouchListener(new ItemClickListener(MainActivity .this, mRecyclerView, new ItemClickListener.ClickListener() {
         @Override
         public void onClick (View view,final int position){
-
             student = studentArrayList.get(position);
             final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
             mBuilder.setTitle(R.string.Constant_Operations);
@@ -127,29 +129,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //method-view to view the existing details of the student
-    //@param-which to select which mode it is
-    private void view(int which)
+    //@param-parameter which to select which mode it is
+    private void view(final int which)
     {
-        Intent intent = new Intent(MainActivity.this, AddStudent.class);
-        intent.putExtra(Constant.MODE,Constant.VIEW);
+        mIntentAddStudentDetail = createIntent(AddStudentActivity.class);
+        mIntentAddStudentDetail.putExtra(Constant.MODE,Constant.VIEW);
         Toast.makeText(MainActivity.this, getString(R.string.Constant_Choose) + " "+itemDialog[which], Toast.LENGTH_LONG).show();
-        intent.putExtra(Constant.VIEW_NAME, student.getmName());
-        intent.putExtra(Constant.VIEW_ROLL, student.getRollNo());
-        startActivity(intent);
+        mIntentAddStudentDetail.putExtra(Constant.VIEW_NAME, student.getmName());
+        mIntentAddStudentDetail.putExtra(Constant.VIEW_ROLL, student.getRollNo());
+        startActivity(mIntentAddStudentDetail);
     }
     /*method-edit to update the details of the student
     @param-which for selecting the mode
     @param-position for selecting the position to update
      */
-    private void edit(int which,int position)
+    private void edit(final int which,final int position)
     {
-        Intent editIntent = new Intent(MainActivity.this, AddStudent.class);
-        editIntent.putExtra(Constant.MODE,Constant.EDIT);
-        editIntent.putExtra(getString(R.string.Constant_ArrayList),studentArrayList);
+        mIntentAddStudentDetail = createIntent(AddStudentActivity.class);
+        mIntentAddStudentDetail.putExtra(Constant.MODE,Constant.EDIT);
+        mIntentAddStudentDetail.putExtra(getString(R.string.Constant_ArrayList),studentArrayList);
         position1 = position;
         Toast.makeText(MainActivity.this, getString(R.string.Constant_Choose) + " "+itemDialog[which], Toast.LENGTH_LONG).show();
         mAdapter.notifyItemRemoved(position);
-        startActivityForResult(editIntent, 2);
+        startActivityForResult(mIntentAddStudentDetail, Constant.REQUESTCODE_EDIT);
     }
     /*
     method-delete to delete the student record from the student arraylist
@@ -167,17 +169,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 studentArrayList.remove(position);
                 Toast.makeText(MainActivity.this, getString(R.string.Constant_Deleted), Toast.LENGTH_LONG).show();
-                if (studentArrayList.size() == 0) {
-                    mEmptyLayout.setVisibility(View.VISIBLE);
+                if (studentArrayList.size() == Constant.NULL) {
+                    mTextViewNoStudent.setVisibility(View.VISIBLE);
                 }
                 mAdapter.notifyDataSetChanged();
             }
         });
         alertBuilder.setNegativeButton(Constant.NO, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface1, int which) {
-                dialogInterface1.cancel();
-                dialogInterface1.dismiss();
+            public void onClick(DialogInterface dialoginterface, int which) {
+                dialoginterface.cancel();
+                dialoginterface.dismiss();
             }
         });
         AlertDialog mDialog = alertBuilder.create();
@@ -188,28 +190,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (mAdapter.getItemCount() == -1) {
-            mEmptyLayout.setVisibility(View.VISIBLE);
-        } else {
-            mEmptyLayout.setVisibility(View.GONE);
-        }
-        // check if the request code is same as what is passed  here it is
-        if (requestCode == 1 && resultCode==RESULT_OK) {
-            String name = data.getStringExtra(Constant.NAME);
-            String rollno = data.getStringExtra(Constant.ROLLNO);
-            Student std=new Student(name,rollno);
-            studentArrayList.add(std);
-            mAdapter.notifyDataSetChanged();
-        }
-        if(requestCode==2 && resultCode==RESULT_OK)
-        {
-            String nameupdate=data.getStringExtra(Constant.UPDATE_NAME);
-            String rollupadte=data.getStringExtra(Constant.UPDATE_ROLLNO);
-            Student infoupdate=new Student(nameupdate,rollupadte);
-            studentArrayList.remove(position1);
-            studentArrayList.add(position1,infoupdate);
-            mAdapter.notifyItemChanged(position1);
-        }
+         switch (requestCode){
+             // check if the request code is same as what is passed  here it is
+             case Constant.REQUESTCODE_SETDATA:
+                 if (resultCode==RESULT_OK) {
+                     String name = data.getStringExtra(Constant.NAME);
+                     String rollno = data.getStringExtra(Constant.ROLLNO);
+                     Student student=new Student(name,rollno);
+                     studentArrayList.add(student);
+                     if(mTextViewNoStudent.getVisibility()==View.VISIBLE)
+                     {
+                         mTextViewNoStudent.setVisibility(View.INVISIBLE);
+
+                     }
+                     mAdapter.notifyDataSetChanged();
+                 }
+                 break;
+             case Constant.REQUESTCODE_EDIT:
+                 if(resultCode==RESULT_OK)
+                 {
+                     String nameupdate=data.getStringExtra(Constant.UPDATE_NAME);
+                     String rollupadte=data.getStringExtra(Constant.UPDATE_ROLLNO);
+                     Student infoupdate=new Student(nameupdate,rollupadte);
+                     studentArrayList.remove(position1);
+                     studentArrayList.add(position1,infoupdate);
+                     mAdapter.notifyItemChanged(position1);
+                 }
+                 break;
+         }
     }
 
     /*
@@ -260,5 +268,17 @@ public class MainActivity extends AppCompatActivity {
              }
          });
          return true;
+    }
+    /*
+    method createIntent for creating the intent
+    @param-activity class name
+    @return intent
+     */
+    public Intent createIntent(Class<?> addStudentActivityClass)
+    {
+        Intent intent=new Intent(this,addStudentActivityClass);
+        return intent;
+
+
     }
 }

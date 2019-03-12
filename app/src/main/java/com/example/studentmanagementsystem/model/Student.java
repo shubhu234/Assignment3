@@ -26,6 +26,7 @@ public class Student  implements Serializable {
     {
         return  name;
     }
+
     //method getRollNo
     //@return roll no of student
     public   String getRollNo()

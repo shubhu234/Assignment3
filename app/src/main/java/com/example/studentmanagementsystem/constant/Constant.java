@@ -3,8 +3,9 @@ package com.example.studentmanagementsystem.constant;
 public class Constant {
 
     public static final String VIEW="View";
+    public static final String DELETE="Delete";
     public static final String MODE="mode_type";
-    public static final String EDIT="edit";
+    public static final String EDIT="Edit";
     public static final String VIEW_NAME="VIEW_NAME";
     public static final String VIEW_ROLL="VIEW_ROLL";
     public static final String OK="ok";
@@ -15,6 +16,10 @@ public class Constant {
     public static final String ROLLNO="RollNo";
     public static final String UPDATE_NAME="updatethename";
     public static final String UPDATE_ROLLNO="updatetheroll";
+    public static final int REQUESTCODE_SETDATA=1;
+    public static final int REQUESTCODE_EDIT=2;
+    public static final int NULL=0;
+
 
 
 }

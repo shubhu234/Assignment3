@@ -12,8 +12,8 @@ public class SortRoll {
     public Comparator<Student> comparator=new Comparator<Student>()
     {
         /*
-         * compare method to compare on the basis of name
-         * @return customer name in sorted order
+         * compare method to compare on the basis of roll no
+         * @return roll no of students in sorted order
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
         public int compare(Student student1, Student student2)
