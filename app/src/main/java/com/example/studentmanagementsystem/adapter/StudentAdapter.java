@@ -1,3 +1,6 @@
+/*
+StudentAdapter class for appearing the items in a list using recycler view
+ */
 package com.example.studentmanagementsystem.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +19,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder   {
-        public TextView mName,mRollNo;
+        public TextView mTextViewName,mTextViewRollNo;
 
         public MyViewHolder(View view) {
             super(view);
-            mName = (TextView) view.findViewById(R.id.tv_studentName);
-            mRollNo = (TextView) view.findViewById(R.id.tv_studentRollno);
+            mTextViewName = (TextView) view.findViewById(R.id.tv_studentName);
+            mTextViewRollNo = (TextView) view.findViewById(R.id.tv_studentRollno);
         }
 
     }
@@ -34,6 +37,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
         return new MyViewHolder(itemView);
 
     }
+    /*
+    Constructor of StudentAdapterClass
+    @param- studentArrayList of the student to store the data
+     */
     public StudentAdapter( ArrayList<Student> studentArrayList){
         this.studentArrayList=studentArrayList;
     }
@@ -43,9 +50,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
         viewHolder.getAdapterPosition();
         Student student = studentArrayList.get(position);
         //MyViewHolder Holder=(MyViewHolder)viewHolder;
-        viewHolder.mName.setText(student.getmName());
+        viewHolder.mTextViewName.setText(student.getmName());
         //viewHolder.mAge.setText(student.getmAge());
-        viewHolder.mRollNo.setText(student.getRollNo());
+        viewHolder.mTextViewRollNo.setText(student.getRollNo());
     }
 
     @Override

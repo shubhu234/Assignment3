@@ -1,3 +1,6 @@
+/*
+ItemClickListener class for clicking the items of the recycler view
+ */
 package com.example.studentmanagementsystem.listener;
 
 import android.content.Context;
@@ -35,7 +38,7 @@ public class ItemClickListener implements RecyclerView.OnItemTouchListener {
 
     }
 
-
+    //interface clickListener for clicking the item
     public interface ClickListener{
         void onClick(View view,int position);
     }

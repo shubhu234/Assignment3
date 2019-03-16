@@ -2,7 +2,6 @@
     <string name="app_name">StudentManagementSystem</string>
     <string name="cancel">cancel</string>
     <string name="no_student_yet">No Student Yet</string>
-    <string name="add_student1">Add Student</string>
     <string name="add_student">Add Student</string>
     <string name="enter_name">Enter Name</string>
     <string name="enter_roll_no">Enter Roll no.</string>
@@ -10,4 +9,24 @@
     <string name="switch_button_title">switch_button_title</string>
     <string name="sort_by_name">Sort By Name</string>
     <string name="sort_by_roll_no">Sort By Roll No</string>
+    <string name="constant_studentdetails">Details of the student</string>
+    <string name="constant_studentdetailsview">Existing details of the student to view</string>
+    <string name="constant_studentdetailsedit">Edit the details of Existing student</string>
+    <string name="constant_studentdetailsadd">Add the details of the  Student</string>
+    <string name="constant_validname">Please enter a valid name</string>
+    <string name="constant_validrollno">Please enter a valid roll no</string>
+    <string name="constant_uniquerollno">Please enter a unique roll no</string>
+    <string name="constant_editdetails">Edit details of the student</string>
+    <string name="constant_update">Update</string>
+    <string name="constant_edit">Edit</string>
+    <string name="constant_delete">Delete</string>
+    <string name="constant_arrayList">ArrayList</string>
+    <string name="constant_operations">Choose the operation you want to perform</string>
+    <string name="constant_choose">You have choosen</string>
+    <string name="constant_deletedsuccesfully">Do you really want to delete this record</string>
+    <string name="constant_deleted">You have successfully deleted the record</string>
+    <string name="updated">Updated By</string>
+    <string name="added_by">Added By</string>
+    <string name="from_service">From Service</string>
+    <string name="from_intent_service">from Intent Service</string>
 </resources>

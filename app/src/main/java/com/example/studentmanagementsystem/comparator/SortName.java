@@ -1,3 +1,6 @@
+/*
+SortRoll class to sort the student on the basis of name using the comparator
+ */
 package com.example.studentmanagementsystem.comparator;
 
 import com.example.studentmanagementsystem.model.Student;
@@ -9,7 +12,7 @@ public class SortName {
     {
         /*
          * compare method to compare on the basis of name
-         * @return customer name in sorted order
+         * @return student name in sorted order
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
         public int compare(Student student1, Student student2)

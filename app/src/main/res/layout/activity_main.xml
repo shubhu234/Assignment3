@@ -6,24 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview_msg">
 
-        <TextView
-
+    <TextView
             android:id="@+id/tv_no_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_student_yet"
-            android:textSize="@dimen/textsize1"
+            android:textSize="@dimen/tv_fontsize"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/textview_msg_marginleft"/>
-
-
-    </RelativeLayout>
-
 
 
     <Button
@@ -36,7 +27,7 @@
         android:text="@string/add_student" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/rv_recyclerView"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="textsize1">30dp</dimen>
+    <dimen name="tv_fontsize">30sp</dimen>
     <dimen name="textview_msg_marginleft">130dp</dimen>
-    <dimen name="text_add_student_textsize">20dp</dimen>
+    <dimen name="tv_add_student_fontsize">20sp</dimen>
     <dimen name="student_name_padding_top">150dp</dimen>
 </resources>

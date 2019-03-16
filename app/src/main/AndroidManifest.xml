@@ -9,14 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AddStudent"></activity>
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.AddStudentActivity"></activity>
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".model.BackgroundIntentService"
+            android:exported="false"/>
+        <service android:name=".model.BackgroundService"
+            android:exported="false"/>
     </application>
 
 </manifest>
