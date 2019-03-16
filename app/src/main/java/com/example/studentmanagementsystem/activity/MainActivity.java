@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        init();
+
         backgroundTask=new BackgroundTask(this,this);
         backgroundTask.execute();
 
@@ -67,12 +70,7 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
        // studentArrayList=dbHelper.getStudent();
 
         init();
-        if(studentArrayList.size()==0){
-            mTextViewNoStudent.setVisibility(View.VISIBLE);
-        }
-        else{
-            mTextViewNoStudent.setVisibility(View.INVISIBLE);
-        }
+
 
 
         recyclerViewHandler();
@@ -211,12 +209,12 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
                      String rollno = data.getStringExtra(Constant.ROLLNO);
                      Student student=new Student(name,rollno);
                      studentArrayList.add(student);
-                     dbHelper.insertStudent(student.getmName(),student.getRollNo());
+                     mAdapter.notifyDataSetChanged();
+
                      if(mTextViewNoStudent.getVisibility()==View.VISIBLE)
                      {
-                         mTextViewNoStudent.setVisibility(View.INVISIBLE);
+                         mTextViewNoStudent.setVisibility(View.GONE);
                      }
-                     mAdapter.notifyDataSetChanged();
                  }
                  break;
              case Constant.REQUESTCODE_EDIT:
@@ -224,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
                  {
                      String nameupdate=data.getStringExtra(Constant.UPDATE_NAME);
                      String rollupadte=data.getStringExtra(Constant.UPDATE_ROLLNO);
-                     dbHelper.updateStudent(nameupdate,rollupadte);
+
                      Student student =new Student(nameupdate,rollupadte);
                      studentArrayList.remove(position1);
                      studentArrayList.add(position1,student);
@@ -303,5 +301,11 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(MainActivity.this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
+        if(studentArrayList.size()==0){
+            mTextViewNoStudent.setVisibility(View.VISIBLE);
+        }
+        else{
+            mTextViewNoStudent.setVisibility(View.GONE);
+        }
     }
 }

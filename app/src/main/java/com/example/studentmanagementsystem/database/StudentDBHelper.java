@@ -55,6 +55,7 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         contentValues.put(STUDENT_COLUMN_NAME, name);
         contentValues.put(STUDENT_COLUMN_ROLLNO,rollno);
         db.insert(STUDENT_TABLE_NAME, null, contentValues);
+        Log.d("insert",name+"  "+rollno);
     }
      /*
     method- updateStudent to update the details of student in the database
@@ -67,7 +68,9 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         contentValues.put(STUDENT_COLUMN_NAME, name);
         db.update(STUDENT_TABLE_NAME, contentValues, STUDENT_COLUMN_ROLLNO+" = ?", new String[]{rollno});
         db.close();
-    }
+         Log.d("update",name+"  "+rollno);
+
+     }
 
     /*
     method getStudent to get the details of the student
@@ -85,6 +88,8 @@ public class StudentDBHelper extends SQLiteOpenHelper {
            Student student=new Student(name,rollno);
            arrayList.add(student);
        }
+        Log.d("insert","get all");
+
         return arrayList;
     }
 

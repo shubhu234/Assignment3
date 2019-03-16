@@ -43,7 +43,7 @@ public class BackgroundSetData extends AsyncTask<String,Void, String> {
             case Constant.ADD:
                 dbHelper.insertStudent(name,rollno);
                 return Constant.ADD_TOAST;
-            case Constant.EDIT:
+            case Constant.TYPE_ACTION_FROM_ACTIVITY_EDIT:
                 dbHelper.updateStudent(name,rollno);
                 return Constant.UPDATE_TOAST;
         }

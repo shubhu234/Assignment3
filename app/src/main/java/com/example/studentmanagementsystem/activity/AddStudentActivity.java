@@ -105,7 +105,7 @@ public class AddStudentActivity extends AppCompatActivity {
                         mMainActivityDetail.putExtra(Constant.NAME, mEditTextName.getText().toString());
                         mMainActivityDetail.putExtra(Constant.ROLLNO, mEditTextRollno.getText().toString());
                     setResult(RESULT_OK, mMainActivityDetail);
-                        generateDialogBox(NAME,ROLLNO,Constant.ADD);
+                        generateDialogBox(mEditTextName.getText().toString(),mEditTextRollno.getText().toString(),Constant.ADD);
                     }
                 }
             });
@@ -137,7 +137,7 @@ public class AddStudentActivity extends AppCompatActivity {
                     mMainActivityDetail.putExtra(Constant.UPDATE_NAME, mEditTextName.getText().toString());
                     mMainActivityDetail.putExtra(Constant.UPDATE_ROLLNO, mEditTextRollno.getText().toString());
                     setResult(RESULT_OK, mMainActivityDetail);
-                    generateDialogBox(UPDATE_NAME,UPDATE_ROLLNO,Constant.EDIT);
+                    generateDialogBox(mEditTextName.getText().toString(),mEditTextRollno.getText().toString(),Constant.EDIT);
                 }
             }
         });
@@ -153,7 +153,7 @@ public class AddStudentActivity extends AppCompatActivity {
         return intent;
     }
 
-    private void generateDialogBox(final String rollNo, final String name, final String typeOfOperation){
+    private void generateDialogBox(final String name, final String rollNo, final String typeOfOperation){
 
         final AlertDialog.Builder mBuilder=new AlertDialog.Builder(AddStudentActivity.this);
         if(selectButtonOperation==REQUESTCODE_EDIT)
@@ -170,7 +170,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
                 switch (which){
                     case ASYNC_TASK:
-                        (new BackgroundSetData(AddStudentActivity.this)).execute(typeOfOperation,rollNo,name);
+                        (new BackgroundSetData(AddStudentActivity.this)).execute(typeOfOperation,name,rollNo);
                         finish();
                         break;
                     case SERVICE:
