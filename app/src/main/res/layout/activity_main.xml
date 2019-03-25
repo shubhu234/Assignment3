@@ -1,37 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
-
-    <TextView
-            android:id="@+id/tv_no_student"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_student_yet"
-            android:textSize="@dimen/tv_fontsize"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/textview_msg_marginleft"/>
-
-
-    <Button
-        android:id="@+id/btn_addStudent"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/add_student" />
+        android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recyclerView"
-        android:scrollbars="vertical"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
-
-</RelativeLayout>
+</LinearLayout>

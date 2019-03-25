@@ -1,7 +1,6 @@
 // Constant class for declaring the constant values
 package com.example.studentmanagementsystem.constant;
 public class Constant {
-
     public static final String VIEW="View";
     public static final String DELETE="Delete";
     public static final String MODE="mode_type";
@@ -28,6 +27,7 @@ public class Constant {
     public static final String INTENT_SERVICE="INTENT_SERVICE";
 
 
-
-
+    public static final String STUDENT_DATA_List = "student_list";
+    public static final String STUDENT_DATA = "student_data";
+    public static final String BTN_CHANGE_TEXT_UPDATE = "update";
 }

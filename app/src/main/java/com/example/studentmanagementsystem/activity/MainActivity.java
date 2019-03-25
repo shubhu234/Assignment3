@@ -11,6 +11,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,8 +29,12 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.studentmanagementsystem.adapter.ViewPagerAdapter;
 import com.example.studentmanagementsystem.constant.Constant;
 import com.example.studentmanagementsystem.database.StudentDBHelper;
+import com.example.studentmanagementsystem.fragment.AddStudentFragment;
+import com.example.studentmanagementsystem.fragment.MainFragment;
 import com.example.studentmanagementsystem.listener.ItemClickListener;
 import com.example.studentmanagementsystem.R;
 import com.example.studentmanagementsystem.comparator.SortName;
@@ -36,12 +42,67 @@ import com.example.studentmanagementsystem.comparator.SortRoll;
 import com.example.studentmanagementsystem.model.BackgroundTask;
 import com.example.studentmanagementsystem.model.Student;
 import com.example.studentmanagementsystem.adapter.StudentAdapter;
+import com.example.studentmanagementsystem.util.Communication;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity implements BackgroundTask.Callback {
 
-    private static final int VIEW=0;
+public class MainActivity extends AppCompatActivity implements Communication
+{
+
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+
+    @Override
+    public void onCreate( Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mViewPager = findViewById(R.id.view_pager);
+        mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+
+        mTabLayout = findViewById(R.id.tab_layout);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+    }
+
+    public void changeTab() {
+
+        if(mViewPager.getCurrentItem()==0)
+        {
+            mViewPager.setCurrentItem(1);
+        }
+
+        else if(mViewPager.getCurrentItem() == 1)
+        {
+            mViewPager.setCurrentItem(0);
+        }
+
+
+
+    }
+    @Override
+    public void communication(Bundle bundle) {
+        if(mViewPager.getCurrentItem()==0){
+            String tag = "android:switcher:" + R.id.view_pager + ":" + 1;
+            AddStudentFragment f = (AddStudentFragment) getSupportFragmentManager().findFragmentByTag(tag);
+            f.update(bundle);
+            changeTab();
+        }else if(mViewPager.getCurrentItem()==1){
+            String tag = "android:switcher:" + R.id.view_pager + ":" + 0;
+            MainFragment f = (MainFragment) getSupportFragmentManager().findFragmentByTag(tag);
+            f.update(bundle);
+            changeTab();
+        }
+    }
+}
+
+
+
+
+
+  /*  private static final int VIEW=0;
     private static final int EDIT=1;
     private static final int DELETE=2;
     private Button mButtonAddStudent;
@@ -99,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
     It lists the student name and roll no in the list format
     On clicking the item a dialog box appears to view,edit and delete the student record
      */
-    private void recyclerViewHandler()
+    /*private void recyclerViewHandler()
     {
 
         mRecyclerView.addOnItemTouchListener(new ItemClickListener(MainActivity .this, mRecyclerView, new ItemClickListener.ClickListener() {
@@ -152,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
     @param-which for selecting the mode
     @param-position for selecting the position to update
      */
-    private void edit(final int which,final int position)
+    /*private void edit(final int which,final int position)
     {
         mIntentAddStudentDetail = createIntent(AddStudentActivity.class);
         mIntentAddStudentDetail.putExtra(Constant.MODE,Constant.EDIT);
@@ -169,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
     @param position-student record at a particular position is deleted
     dialog box appears when you choose the delete operation prompting that you have to delete this record
      */
-    private void delete(int which, final int position)
+    /*private void delete(int which, final int position)
     {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         alertBuilder.setTitle(R.string.constant_deletedsuccesfully);
@@ -238,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
     toggle switch-to switch between the grid and linear layout
     dropdown to select options to sort on basis of roll no or name
      */
-    public boolean onCreateOptionsMenu(Menu menu) {
+    /*public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_item, menu);
         MenuItem item=menu.findItem(R.id.switch1);
@@ -285,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
     @param-activity class name
     @return intent
      */
-    public Intent createIntent(Class<?> addStudentActivityClass)
+    /*public Intent createIntent(Class<?> addStudentActivityClass)
     {
         Intent intent=new Intent(this,addStudentActivityClass);
         return intent;
@@ -294,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
     method getOutput to get the result from the Async Task
     @param out for storing the result in studentArrayList
      */
-    public void getOutput(ArrayList<Student> out)
+    /*public void getOutput(ArrayList<Student> out)
     {
         studentArrayList=out;
         mAdapter = new StudentAdapter(studentArrayList);
@@ -308,4 +369,4 @@ public class MainActivity extends AppCompatActivity implements BackgroundTask.Ca
             mTextViewNoStudent.setVisibility(View.GONE);
         }
     }
-}
+}*/
