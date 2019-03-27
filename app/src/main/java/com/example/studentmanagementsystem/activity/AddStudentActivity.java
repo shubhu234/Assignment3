@@ -17,18 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.studentmanagementsystem.constant.Constant;
 import com.example.studentmanagementsystem.R;
-import com.example.studentmanagementsystem.model.BackgroundIntentService;
-import com.example.studentmanagementsystem.model.BackgroundService;
-import com.example.studentmanagementsystem.model.BackgroundSetData;
+import com.example.studentmanagementsystem.service.BackgroundIntentService;
+import com.example.studentmanagementsystem.service.BackgroundService;
+import com.example.studentmanagementsystem.asynctask.BackgroundSetData;
 import com.example.studentmanagementsystem.model.Student;
 import com.example.studentmanagementsystem.validation.Validate;
 import java.util.ArrayList;
 
-import static com.example.studentmanagementsystem.constant.Constant.NAME;
 import static com.example.studentmanagementsystem.constant.Constant.REQUESTCODE_EDIT;
-import static com.example.studentmanagementsystem.constant.Constant.ROLLNO;
-import static com.example.studentmanagementsystem.constant.Constant.UPDATE_NAME;
-import static com.example.studentmanagementsystem.constant.Constant.UPDATE_ROLLNO;
 
 public class AddStudentActivity extends AppCompatActivity {
     //variables of AddStudent class

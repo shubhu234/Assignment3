@@ -1,9 +1,10 @@
-package com.example.studentmanagementsystem.model;
+package com.example.studentmanagementsystem.asynctask;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.studentmanagementsystem.database.StudentDBHelper;
+import com.example.studentmanagementsystem.model.Student;
 
 import java.util.ArrayList;
 

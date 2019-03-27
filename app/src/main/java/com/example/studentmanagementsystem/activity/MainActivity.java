@@ -9,7 +9,6 @@ package com.example.studentmanagementsystem.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +32,7 @@ import com.example.studentmanagementsystem.listener.ItemClickListener;
 import com.example.studentmanagementsystem.R;
 import com.example.studentmanagementsystem.comparator.SortName;
 import com.example.studentmanagementsystem.comparator.SortRoll;
-import com.example.studentmanagementsystem.model.BackgroundTask;
+import com.example.studentmanagementsystem.asynctask.BackgroundTask;
 import com.example.studentmanagementsystem.model.Student;
 import com.example.studentmanagementsystem.adapter.StudentAdapter;
 import java.util.ArrayList;

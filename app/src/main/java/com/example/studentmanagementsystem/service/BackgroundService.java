@@ -1,33 +1,37 @@
-package com.example.studentmanagementsystem.model;
+package com.example.studentmanagementsystem.service;
 
-
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
+import android.os.IBinder;
 import android.widget.Toast;
 
 import com.example.studentmanagementsystem.R;
 import com.example.studentmanagementsystem.constant.Constant;
 import com.example.studentmanagementsystem.database.StudentDBHelper;
 
+public class BackgroundService extends Service {
 
-public class BackgroundIntentService extends IntentService {
 
-    public BackgroundIntentService() {
-        super("BackgroundIntentService");
-
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
+
+    /*
     /*
     @param- intent for passing
-    This method is used to insert and update the data through intent service as the background
+    This method is used to insert and update the data through  service as the background
      */
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         StudentDBHelper studentDataBaseHelper=new StudentDBHelper(this);
-        Toast.makeText(this,getString(R.string.from_intent_service),Toast.LENGTH_LONG).show();
+        Toast.makeText(this,getString(R.string.from_service),Toast.LENGTH_LONG).show();
         if(intent.getStringExtra(Constant.MODE).equals(Constant.ADD)){
             studentDataBaseHelper.insertStudent(intent.getStringExtra(Constant.NAME),intent.getStringExtra(Constant.ROLLNO));
         }else if(intent.getStringExtra(Constant.MODE).equals(Constant.TYPE_ACTION_FROM_ACTIVITY_EDIT)){
             studentDataBaseHelper.updateStudent(intent.getStringExtra(Constant.NAME),intent.getStringExtra(Constant.ROLLNO));
         }
+        stopSelf();
+        return  START_NOT_STICKY;
     }
 }

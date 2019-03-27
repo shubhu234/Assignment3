@@ -1,7 +1,7 @@
 /*
 This class is used for setting the data through the Async task
  */
-package com.example.studentmanagementsystem.model;
+package com.example.studentmanagementsystem.asynctask;
 
 import android.content.Context;
 import android.os.AsyncTask;
