@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,27 +22,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studentmanagementsystem.R;
 import com.example.studentmanagementsystem.activity.AddStudentActivity;
-import com.example.studentmanagementsystem.activity.MainActivity;
 import com.example.studentmanagementsystem.adapter.StudentAdapter;
 import com.example.studentmanagementsystem.comparator.SortName;
 import com.example.studentmanagementsystem.comparator.SortRoll;
 import com.example.studentmanagementsystem.constant.Constant;
 import com.example.studentmanagementsystem.database.StudentDBHelper;
 import com.example.studentmanagementsystem.listener.ItemClickListener;
-import com.example.studentmanagementsystem.model.BackgroundTask;
+import com.example.studentmanagementsystem.asynctask.BackgroundTask;
 import com.example.studentmanagementsystem.model.Student;
 import com.example.studentmanagementsystem.util.Communication;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import static android.app.Activity.RESULT_OK;
 
 public class MainFragment extends Fragment {
 
@@ -227,10 +222,10 @@ public class MainFragment extends Fragment {
     //method-view to view the existing details of the student
     //@param-parameter which to select which mode it is
     private void sendAnotherActivity(){
-        Intent intent=new Intent(getContext(),AddStudentActivity.class);
+        Intent intent=new Intent(mContext,AddStudentActivity.class);
         intent.putExtra(Constant.STUDENT_DATA,studentArrayList.get(position1));
         intent.putExtra(Constant.MODE,Constant.VIEW);
-        getContext().startActivity(intent);
+        mContext.startActivity(intent);
     }
 
     /*
@@ -308,13 +303,9 @@ public class MainFragment extends Fragment {
             case Constant.EDIT:
 
                 String fName=bundleFrom2Fragment.getString(Constant.NAME);
-
-                //get Object from itemClicked in RecycleView
                 Student suStudent=studentArrayList.get(position1);
                 suStudent.setmName(fName);
                 mAdapter.notifyItemChanged(position1);
-                // mStudentDatabaseHelper.update_name(suStudent.getmId(),fName+" "+lName);
-                //mStudentDatabaseHelper.update_name(fName+" "+lName,suStudent.getmId());
                 Toast.makeText(mContext,Constant.UPDATE_TOAST,Toast.LENGTH_SHORT).show();
                 break;
         }

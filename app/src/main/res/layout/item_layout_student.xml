@@ -7,9 +7,7 @@
         android:id="@+id/tv_studentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/student_name"
-
-        />
+        android:textColor="@color/student_name" />
 
     <TextView
         android:id="@+id/tv_studentRollno"

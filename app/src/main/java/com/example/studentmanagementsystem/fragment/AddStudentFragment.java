@@ -4,37 +4,32 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.studentmanagementsystem.R;
-import com.example.studentmanagementsystem.activity.AddStudentActivity;
-import com.example.studentmanagementsystem.activity.MainActivity;
 import com.example.studentmanagementsystem.constant.Constant;
 import com.example.studentmanagementsystem.database.StudentDBHelper;
-import com.example.studentmanagementsystem.model.BackgroundIntentService;
-import com.example.studentmanagementsystem.model.BackgroundService;
-import com.example.studentmanagementsystem.model.BackgroundSetData;
+import com.example.studentmanagementsystem.service.BackgroundIntentService;
+import com.example.studentmanagementsystem.service.BackgroundService;
+import com.example.studentmanagementsystem.asynctask.BackgroundSetData;
 import com.example.studentmanagementsystem.model.Student;
 import com.example.studentmanagementsystem.util.Communication;
 import com.example.studentmanagementsystem.validation.Validate;
 
 import java.util.ArrayList;
 
-import static com.example.studentmanagementsystem.constant.Constant.REQUESTCODE_EDIT;
-
 public class AddStudentFragment extends Fragment {
 
-    private static final int REQUEST_CODE_EDIT =1 ;
-    private static final int REQUEST_CODE_ADD =2 ;
+    private static final int REQUEST_CODE_EDIT =0 ;
+    private static final int REQUEST_CODE_ADD =1 ;
     private Button mButtonSaveDetails;
     private EditText mEditTextName;
     private EditText mEditTextRollno;
@@ -74,6 +69,11 @@ public class AddStudentFragment extends Fragment {
         bundle.putString(Constant.MODE,Constant.ADD);
 
         init();
+        if(getArguments()!=null){
+            bundle=getArguments();
+            Log.d("check", "onCreateView: ");
+            update(bundle);
+        }
 
         //set click listener to button
         mButtonSaveDetails.setOnClickListener(new View.OnClickListener() {
@@ -101,10 +101,10 @@ public class AddStudentFragment extends Fragment {
         }
 
         if (error) {
-
-            bundle.putString(Constant.NAME,name);
-            generateDialogBox(mEditTextName.getText().toString(),mEditTextRollno.getText().toString(),Constant.EDIT);
-
+            Bundle editBundle=new Bundle();
+            editBundle.putString(Constant.NAME,name);
+            editBundle.putString(Constant.ROLLNO,mEditTextRollno.getText().toString());
+            generateDialogBox(mEditTextName.getText().toString(),mEditTextRollno.getText().toString(),Constant.EDIT,editBundle);
         }
     }
 
@@ -113,7 +113,7 @@ public class AddStudentFragment extends Fragment {
         String name = mEditTextName.getText().toString().trim();
         String rollNo = mEditTextRollno.getText().toString().trim();
 
-        boolean error=true;
+         error=true;
         //various validation methods to validate the name,roll no and unique roll no
         if (!Validate.isValidateName(name)) {
             mEditTextName.setError("Enter Valid name");
@@ -129,11 +129,10 @@ public class AddStudentFragment extends Fragment {
         }
 
         if (error) {
-
             Student student = new Student(name.toUpperCase(),rollNo);
-            bundle.putSerializable(Constant.STUDENT_DATA,student);
-            generateDialogBox(mEditTextName.getText().toString(),mEditTextRollno.getText().toString(),Constant.ADD);
-
+            Bundle addBundle=new Bundle();
+            addBundle.putSerializable(Constant.STUDENT_DATA,student);
+            generateDialogBox(mEditTextName.getText().toString(),mEditTextRollno.getText().toString(),Constant.ADD,addBundle);
         }
     }
 
@@ -141,17 +140,17 @@ public class AddStudentFragment extends Fragment {
         mButtonSaveDetails=(Button)view.findViewById(R.id.btn_save);
         mEditTextName=(EditText)view.findViewById(R.id.et_name);
         mEditTextRollno=(EditText) view.findViewById(R.id.et_rollno);
-        mTextviewAddStudent=(TextView)view.findViewById(R.id.tv_addstudent);
+
     }
     private void setTextOfEditText(Student student){
         mEditTextName.setText(student.getmName().toUpperCase());
         mEditTextRollno.setText(student.getRollNo().toUpperCase());
     }
 
-    private void generateDialogBox(final String name, final String rollNo, final String typeOfOperation){
+    private void generateDialogBox(final String name, final String rollNo, final String typeOfOperation,final Bundle sendBundle){
 
         final AlertDialog.Builder mBuilder=new AlertDialog.Builder(mContext);
-        if(selectButtonOperation==REQUESTCODE_EDIT)
+        if(typeOfOperation==Constant.EDIT)
             mBuilder.setTitle(R.string.updated);
         else
             mBuilder.setTitle(R.string.added_by);
@@ -176,12 +175,14 @@ public class AddStudentFragment extends Fragment {
                         startServiceWork(intentForService,name,rollNo,typeOfOperation);
                         break;
                 }
+                sendBundle.putString(Constant.MODE,typeOfOperation);
+                mListener.communication(sendBundle);
+
             }
         });
         mBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
             }
         });
         AlertDialog mDialog=mBuilder.create();
@@ -217,6 +218,7 @@ public class AddStudentFragment extends Fragment {
     public void update(Bundle bundleNew){
         bundle=bundleNew;
         typeAction=bundle.getString(Constant.MODE);
+        Log.d("view", "update:message ");
         switch (typeAction){
             case Constant.ADD:
                 selectButtonOperation=REQUEST_CODE_ADD;
@@ -224,7 +226,7 @@ public class AddStudentFragment extends Fragment {
                 mButtonSaveDetails.setText("ADD");
                 mEditTextRollno.setEnabled(true);
                 break;
-            case Constant.TYPE_ACTION_FROM_ACTIVITY_EDIT:
+            case Constant.EDIT:
                 selectButtonOperation=REQUEST_CODE_EDIT;
                 mButtonSaveDetails.setText(Constant.BTN_CHANGE_TEXT_UPDATE);
                 editStudentDetail=(Student) bundle.getSerializable(Constant.STUDENT_DATA);

@@ -7,45 +7,16 @@ There is a switch button which toggles between the grid view and the list view
  */
 package com.example.studentmanagementsystem.activity;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.studentmanagementsystem.adapter.ViewPagerAdapter;
-import com.example.studentmanagementsystem.constant.Constant;
-import com.example.studentmanagementsystem.database.StudentDBHelper;
 import com.example.studentmanagementsystem.fragment.AddStudentFragment;
 import com.example.studentmanagementsystem.fragment.MainFragment;
-import com.example.studentmanagementsystem.listener.ItemClickListener;
 import com.example.studentmanagementsystem.R;
-import com.example.studentmanagementsystem.comparator.SortName;
-import com.example.studentmanagementsystem.comparator.SortRoll;
-import com.example.studentmanagementsystem.model.BackgroundTask;
-import com.example.studentmanagementsystem.model.Student;
-import com.example.studentmanagementsystem.adapter.StudentAdapter;
 import com.example.studentmanagementsystem.util.Communication;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class MainActivity extends AppCompatActivity implements Communication

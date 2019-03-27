@@ -1,7 +1,7 @@
 /*
 This class is used for setting the data through the Async task
  */
-package com.example.studentmanagementsystem.model;
+package com.example.studentmanagementsystem.asynctask;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -43,7 +43,7 @@ public class BackgroundSetData extends AsyncTask<String,Void, String> {
             case Constant.ADD:
                 dbHelper.insertStudent(name,rollno);
                 return Constant.ADD_TOAST;
-            case Constant.TYPE_ACTION_FROM_ACTIVITY_EDIT:
+            case Constant.EDIT:
                 dbHelper.updateStudent(name,rollno);
                 return Constant.UPDATE_TOAST;
         }
