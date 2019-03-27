@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.studentmanagementsystem.constant.Constant;
 import com.example.studentmanagementsystem.fragment.AddStudentFragment;
 import com.example.studentmanagementsystem.fragment.MainFragment;
 
@@ -34,9 +35,9 @@ public class ViewPagerAdapter  extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "StudentList";
+                return Constant.STUDENTLIST;
             case 1:
-                return "Add/Update";
+                return Constant.UPDATE;
         }
         return null;
     }

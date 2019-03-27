@@ -18,7 +18,6 @@ public class BackgroundService extends Service {
     }
 
     /*
-    /*
     @param- intent for passing
     This method is used to insert and update the data through  service as the background
      */

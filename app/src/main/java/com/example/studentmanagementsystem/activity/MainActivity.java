@@ -56,12 +56,13 @@ public class MainActivity extends AppCompatActivity implements Communication
     @Override
     public void communication(Bundle bundle) {
         if(mViewPager.getCurrentItem()==0){
-            String tag = "android:switcher:" + R.id.view_pager + ":" + 1;
+            String tag = getString(R.string.switcher) + R.id.view_pager + ":" + 1;
             AddStudentFragment f = (AddStudentFragment) getSupportFragmentManager().findFragmentByTag(tag);
+            //f.view(bundle);
             f.update(bundle);
             changeTab();
         }else if(mViewPager.getCurrentItem()==1){
-            String tag = "android:switcher:" + R.id.view_pager + ":" + 0;
+            String tag = getString(R.string.switcher) + R.id.view_pager + ":" + 0;
             MainFragment f = (MainFragment) getSupportFragmentManager().findFragmentByTag(tag);
             f.update(bundle);
             changeTab();

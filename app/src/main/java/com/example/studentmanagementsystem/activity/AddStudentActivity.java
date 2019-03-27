@@ -21,26 +21,20 @@ public class AddStudentActivity extends AppCompatActivity implements Communicati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_student_fragment);
+        setContentView(R.layout.activity_addstudent);
         bundle=getIntent().getExtras();
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         mAddStudentFragment=new AddStudentFragment();
-        Log.d("2nd activity", "onCreate: agya");
         fragmentTransaction.add(R.id.frag_container, mAddStudentFragment);
-        mAddStudentFragment.setArguments(bundle);
         fragmentTransaction.commit();
     }
 
-  /*  @Override
+    @Override
     protected void onStart() {
         super.onStart();
-        Log.d("2nd activity", "onCreate: gya");
-
-        mAddStudentFragment.update(bundle);
-        //Log.d("2nd activity", "onCreate: gya");
-
-    }*/
+        mAddStudentFragment.viewMode(bundle);
+    }
 
     @Override
     public void communication(Bundle bundle) {

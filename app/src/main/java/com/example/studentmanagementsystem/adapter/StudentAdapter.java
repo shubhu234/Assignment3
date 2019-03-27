@@ -47,11 +47,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull StudentAdapter.MyViewHolder viewHolder, int position) {
-        viewHolder.getAdapterPosition();
-        Student student = studentArrayList.get(position);
-        //MyViewHolder Holder=(MyViewHolder)viewHolder;
+        Student student = studentArrayList.get(viewHolder.getAdapterPosition());
         viewHolder.mTextViewName.setText(student.getmName());
-        //viewHolder.mAge.setText(student.getmAge());
         viewHolder.mTextViewRollNo.setText(student.getRollNo());
     }
 

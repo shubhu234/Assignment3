@@ -30,4 +30,7 @@ public class Constant {
     public static final String STUDENT_DATA_List = "student_list";
     public static final String STUDENT_DATA = "student_data";
     public static final String BTN_CHANGE_TEXT_UPDATE = "update";
+    public static final String STUDENTLIST="StudentList";
+    public static final String UPDATE="ADD/UPDATE";
+    public static final String ADDING="ADD";
 }

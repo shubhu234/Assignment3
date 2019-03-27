@@ -82,8 +82,6 @@ public class MainFragment extends Fragment {
         init();
 
 
-        //set Onclick on Add btn
-
         setHasOptionsMenu(true);
         mButtonAddStudent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,8 +128,7 @@ public class MainFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case VIEW:
-                                position1=position;
-                                sendAnotherActivity();
+                                view(which);
                                 break;
                             case EDIT:
                                 Bundle bundle=new Bundle();
@@ -206,7 +203,7 @@ public class MainFragment extends Fragment {
             mListener = (Communication) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + getString(R.string.error));
         }
 
     }
@@ -218,13 +215,15 @@ public class MainFragment extends Fragment {
     }
 
 
-
     //method-view to view the existing details of the student
-    //@param-parameter which to select which mode it is
-    private void sendAnotherActivity(){
-        Intent intent=new Intent(mContext,AddStudentActivity.class);
-        intent.putExtra(Constant.STUDENT_DATA,studentArrayList.get(position1));
+    //@param-which to select which mode it is
+    private void view(int which)
+    {
+        Intent intent = new Intent(mContext, AddStudentActivity.class);
         intent.putExtra(Constant.MODE,Constant.VIEW);
+        Toast.makeText(mContext, getString(R.string.constant_choose) + " "+itemDialog[which], Toast.LENGTH_LONG).show();
+        intent.putExtra(Constant.VIEW_NAME, student.getmName());
+        intent.putExtra(Constant.VIEW_ROLL, student.getRollNo());
         mContext.startActivity(intent);
     }
 
@@ -283,31 +282,22 @@ public class MainFragment extends Fragment {
 
         switch(bundleFrom2Fragment.getString(Constant.MODE)){
             case Constant.ADD:
-
-
-                //Add Object in Student ArrayList at possition
                 int possitionInsertStudent = 0;
-                //get data from another Activity
-
                 Student sudStudent = (Student) bundleFrom2Fragment.getSerializable(Constant.STUDENT_DATA);
-                //mStudentDatabaseHelper.addData(sudStudent.getmId(),sudStudent.getmFirstName()+" "+sudStudent.getmLastName());
                 studentArrayList.add(possitionInsertStudent, sudStudent);
-                // mStudentDatabaseHelper.addData(sudStudent.getmId(),sudStudent.getmFirstName()+" "+sudStudent.getmLastName());
-
-                //As size of ArrayList>0 setting visibility of back textView to gone
                 if (mTextViewNoStudent.getVisibility() == View.VISIBLE) mTextViewNoStudent.setVisibility(View.GONE);
                 mAdapter.notifyItemInserted(possitionInsertStudent);
                 Toast.makeText(mContext,Constant.ADD_TOAST,Toast.LENGTH_SHORT).show();
-
                 break;
             case Constant.EDIT:
-
                 String fName=bundleFrom2Fragment.getString(Constant.NAME);
                 Student suStudent=studentArrayList.get(position1);
                 suStudent.setmName(fName);
                 mAdapter.notifyItemChanged(position1);
                 Toast.makeText(mContext,Constant.UPDATE_TOAST,Toast.LENGTH_SHORT).show();
                 break;
+                default:
+                    break;
         }
     }
 

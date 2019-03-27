@@ -71,8 +71,7 @@ public class AddStudentFragment extends Fragment {
         init();
         if(getArguments()!=null){
             bundle=getArguments();
-            Log.d("check", "onCreateView: ");
-            update(bundle);
+            viewMode(bundle);
         }
 
         //set click listener to button
@@ -116,15 +115,15 @@ public class AddStudentFragment extends Fragment {
          error=true;
         //various validation methods to validate the name,roll no and unique roll no
         if (!Validate.isValidateName(name)) {
-            mEditTextName.setError("Enter Valid name");
+            mEditTextName.setError(getString(R.string.constant_validname));
             error=false;
         }
         if (!Validate.isValidateRollNo(rollNo)) {
-            mEditTextRollno.setError("Enter valid rollno");
+            mEditTextRollno.setError(getString(R.string.constant_validrollno));
             error=false;
         }
         if (!Validate.isUniqueNo(list,rollNo)) {
-            mEditTextRollno.setError("Enter unique roll no");
+            mEditTextRollno.setError(getString(R.string.constant_uniquerollno));
             error=false;
         }
 
@@ -215,15 +214,23 @@ public class AddStudentFragment extends Fragment {
         mListener=null;
     }
 
+    public void viewMode(Bundle bundle)
+    {
+        mEditTextName.setText(bundle.getString(Constant.VIEW_NAME));
+        mEditTextRollno.setText(bundle.getString(Constant.VIEW_ROLL));
+        mEditTextRollno.setEnabled(false);
+        mEditTextName.setEnabled(false);
+        mButtonSaveDetails.setVisibility(View.GONE);
+    }
+
     public void update(Bundle bundleNew){
         bundle=bundleNew;
         typeAction=bundle.getString(Constant.MODE);
-        Log.d("view", "update:message ");
         switch (typeAction){
             case Constant.ADD:
                 selectButtonOperation=REQUEST_CODE_ADD;
                 list=(ArrayList<Student>) bundle.getSerializable(Constant.STUDENT_DATA_List);
-                mButtonSaveDetails.setText("ADD");
+                mButtonSaveDetails.setText(Constant.ADDING);
                 mEditTextRollno.setEnabled(true);
                 break;
             case Constant.EDIT:
@@ -233,15 +240,6 @@ public class AddStudentFragment extends Fragment {
                 mEditTextName.setText(editStudentDetail.getmName().toUpperCase());
                 mEditTextRollno.setText(editStudentDetail.getRollNo().toUpperCase());
                 mEditTextRollno.setEnabled(false);
-                //mButtonAdd.setVisibility(View.VISIBLE);
-                break;
-            case Constant.VIEW:
-                editStudentDetail=(Student) bundle.getSerializable(Constant.STUDENT_DATA);
-                mEditTextName.setText(editStudentDetail.getmName().toUpperCase());
-                mEditTextRollno.setText(editStudentDetail.getRollNo().toUpperCase());
-                mEditTextRollno.setEnabled(false);
-                mEditTextName.setEnabled(false);
-                mButtonSaveDetails.setVisibility(View.GONE);
                 break;
         }
     }

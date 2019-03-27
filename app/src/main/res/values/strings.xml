@@ -29,4 +29,6 @@
     <string name="added_by">Added By</string>
     <string name="from_service">From Service</string>
     <string name="from_intent_service">from Intent Service</string>
+    <string name="switcher">android:switcher:</string>
+    <string name="error">must implement OnFragmentInteractionListener</string>
 </resources>
