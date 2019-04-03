@@ -3,6 +3,7 @@ package com.example.studentmanagementsystem.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.example.studentmanagementsystem.R;
@@ -29,5 +30,8 @@ public class BackgroundIntentService extends IntentService {
         }else if(intent.getStringExtra(Constant.MODE).equals(Constant.EDIT)){
             studentDataBaseHelper.updateStudent(intent.getStringExtra(Constant.NAME),intent.getStringExtra(Constant.ROLLNO));
         }
+        intent.setAction(Constant.ACTION);
+        String echoMessage = Constant.ACTION ;
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent.putExtra(getString(R.string.message_received), echoMessage));
     }
 }

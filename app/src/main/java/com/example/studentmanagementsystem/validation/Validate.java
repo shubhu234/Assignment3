@@ -9,9 +9,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Validate {
-     /*method- isValidateName to validate the name
-     @param name of the student
-     return true if name is valid else return false
+    /**
+     * method- isValidateName to validate the name
+     * @param name of the student
+     * @return true if name is valid else return false
      */
      public static boolean isValidateName(String name)
     {
@@ -20,9 +21,10 @@ public final class Validate {
         Matcher matcher=pattern.matcher(name);
         return matcher.find();
     }
-    /*method- isValidateRollno to validate the rollno
-     @param roll no of the student
-     return true if rollno is valid else return false
+    /**
+     * method- isValidateRollno to validate the rollno
+     * @param rollno of the student
+     * @return true if rollno is valid else return false
      */
     public static  boolean isValidateRollNo(String rollno)
     {
@@ -31,9 +33,12 @@ public final class Validate {
         Matcher matcher=pattern.matcher(rollno);
         return matcher.find();
     }
-    /*method- isUniqueNo is to validate the unique roll no
-     @param name of the student
-     return true if entered roll no is valid else return false
+
+    /**
+     * method- isUniqueNo is to validate the unique roll no
+     * @param studentArrayList for getting the roll no
+     * @param rollno of the student
+     * @return true if entered roll no is valid else return false
      */
     public static boolean isUniqueNo(ArrayList<Student> studentArrayList ,String rollno)
     {
@@ -45,5 +50,4 @@ public final class Validate {
         }
         return true;
     }
-
 }

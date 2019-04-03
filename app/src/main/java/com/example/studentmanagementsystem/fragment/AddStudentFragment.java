@@ -1,10 +1,13 @@
 package com.example.studentmanagementsystem.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.studentmanagementsystem.R;
 import com.example.studentmanagementsystem.constant.Constant;
@@ -26,15 +30,16 @@ import com.example.studentmanagementsystem.validation.Validate;
 
 import java.util.ArrayList;
 
-public class AddStudentFragment extends Fragment {
+import static com.example.studentmanagementsystem.R.string.message_received;
+
+public class AddStudentFragment extends Fragment implements BackgroundSetData.SendData {
 
     private static final int REQUEST_CODE_EDIT =0 ;
     private static final int REQUEST_CODE_ADD =1 ;
-    private Button mButtonSaveDetails;
-    private EditText mEditTextName;
-    private EditText mEditTextRollno;
-    private TextView mTextviewAddStudent;
-    private Intent mMainActivityDetail;
+    private Button btnSaveDetails;
+    private EditText etName;
+    private EditText etRollno;
+    private TextView tvAddStudent;
     private int selectButtonOperation;
     private ArrayList<Student> list=new ArrayList<Student>();
     private static final String itemDialog[]={Constant.AYNC_TASK,Constant.SERVICE,Constant.INTENT_SERVICE};
@@ -44,14 +49,32 @@ public class AddStudentFragment extends Fragment {
     private View view;
     private StudentDBHelper dbHelper;
     private Context mContext;
+    private Bundle sendFragmentBundle;
     private Bundle bundle;
     public boolean error;
     private Communication mListener;
     private String typeAction;
     private Student editStudentDetail;
+    private BackgroundSetData.SendData mFragmentContext;
+    private StudentBroadcastReceiver mStudentBroadcastReceiver = new StudentBroadcastReceiver();
 
     public AddStudentFragment(){
         //empty constructor
+    }
+
+    //to register broadcast receiver
+    @Override
+   public void onStart() {
+        super.onStart();
+        IntentFilter intentFilter = new IntentFilter(Constant.ACTION);
+        LocalBroadcastManager.getInstance(mContext).registerReceiver(mStudentBroadcastReceiver,intentFilter);
+    }
+    //to unregister broadcast receiver
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(mContext).unregisterReceiver(mStudentBroadcastReceiver);
+
     }
 
     @Override
@@ -75,7 +98,7 @@ public class AddStudentFragment extends Fragment {
         }
 
         //set click listener to button
-        mButtonSaveDetails.setOnClickListener(new View.OnClickListener() {
+        btnSaveDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 error=true;
@@ -93,37 +116,37 @@ public class AddStudentFragment extends Fragment {
     }
 
     private void editButton() {
-        String name = mEditTextName.getText().toString().trim();
+        String name = etName.getText().toString().trim();
         if (!Validate.isValidateName(name)) {
-            mEditTextName.setError("Enter Valid name");
+            etName.setError("Enter Valid name");
             error=false;
         }
 
         if (error) {
             Bundle editBundle=new Bundle();
             editBundle.putString(Constant.NAME,name);
-            editBundle.putString(Constant.ROLLNO,mEditTextRollno.getText().toString());
-            generateDialogBox(mEditTextName.getText().toString(),mEditTextRollno.getText().toString(),Constant.EDIT,editBundle);
+            editBundle.putString(Constant.ROLLNO,etRollno.getText().toString());
+            generateDialogBox(etName.getText().toString(),etRollno.getText().toString(),Constant.EDIT,editBundle);
         }
     }
 
     private void addButton()
     {
-        String name = mEditTextName.getText().toString().trim();
-        String rollNo = mEditTextRollno.getText().toString().trim();
+        String name = etName.getText().toString().trim();
+        String rollNo = etRollno.getText().toString().trim();
 
          error=true;
         //various validation methods to validate the name,roll no and unique roll no
         if (!Validate.isValidateName(name)) {
-            mEditTextName.setError(getString(R.string.constant_validname));
+            etName.setError(getString(R.string.constant_validname));
             error=false;
         }
         if (!Validate.isValidateRollNo(rollNo)) {
-            mEditTextRollno.setError(getString(R.string.constant_validrollno));
+            etRollno.setError(getString(R.string.constant_validrollno));
             error=false;
         }
         if (!Validate.isUniqueNo(list,rollNo)) {
-            mEditTextRollno.setError(getString(R.string.constant_uniquerollno));
+            etRollno.setError(getString(R.string.constant_uniquerollno));
             error=false;
         }
 
@@ -131,23 +154,23 @@ public class AddStudentFragment extends Fragment {
             Student student = new Student(name.toUpperCase(),rollNo);
             Bundle addBundle=new Bundle();
             addBundle.putSerializable(Constant.STUDENT_DATA,student);
-            generateDialogBox(mEditTextName.getText().toString(),mEditTextRollno.getText().toString(),Constant.ADD,addBundle);
+            generateDialogBox(etName.getText().toString(),etRollno.getText().toString(),Constant.ADD,addBundle);
         }
     }
 
     private void init() {
-        mButtonSaveDetails=(Button)view.findViewById(R.id.btn_save);
-        mEditTextName=(EditText)view.findViewById(R.id.et_name);
-        mEditTextRollno=(EditText) view.findViewById(R.id.et_rollno);
-
+        btnSaveDetails=(Button)view.findViewById(R.id.btn_save);
+        etName=(EditText)view.findViewById(R.id.et_name);
+        etRollno=(EditText) view.findViewById(R.id.et_rollno);
     }
     private void setTextOfEditText(Student student){
-        mEditTextName.setText(student.getmName().toUpperCase());
-        mEditTextRollno.setText(student.getRollNo().toUpperCase());
+        etName.setText(student.getmName().toUpperCase());
+       etRollno.setText(student.getRollNo().toUpperCase());
     }
 
     private void generateDialogBox(final String name, final String rollNo, final String typeOfOperation,final Bundle sendBundle){
-
+        sendBundle.putString(Constant.MODE,typeOfOperation);
+        sendFragmentBundle=sendBundle;
         final AlertDialog.Builder mBuilder=new AlertDialog.Builder(mContext);
         if(typeOfOperation==Constant.EDIT)
             mBuilder.setTitle(R.string.updated);
@@ -163,7 +186,7 @@ public class AddStudentFragment extends Fragment {
 
                 switch (which){
                     case ASYNC_TASK:
-                        (new BackgroundSetData(mContext)).execute(typeOfOperation,name,rollNo);
+                        (new BackgroundSetData(mContext,(BackgroundSetData.SendData)AddStudentFragment.this)).execute(typeOfOperation,name,rollNo);
                         break;
                     case SERVICE:
                         Intent service=new Intent(mContext, BackgroundService.class);
@@ -174,9 +197,6 @@ public class AddStudentFragment extends Fragment {
                         startServiceWork(intentForService,name,rollNo,typeOfOperation);
                         break;
                 }
-                sendBundle.putString(Constant.MODE,typeOfOperation);
-                mListener.communication(sendBundle);
-
             }
         });
         mBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -216,11 +236,11 @@ public class AddStudentFragment extends Fragment {
 
     public void viewMode(Bundle bundle)
     {
-        mEditTextName.setText(bundle.getString(Constant.VIEW_NAME));
-        mEditTextRollno.setText(bundle.getString(Constant.VIEW_ROLL));
-        mEditTextRollno.setEnabled(false);
-        mEditTextName.setEnabled(false);
-        mButtonSaveDetails.setVisibility(View.GONE);
+        etName.setText(bundle.getString(Constant.VIEW_NAME));
+        etRollno.setText(bundle.getString(Constant.VIEW_ROLL));
+        etRollno.setEnabled(false);
+        etName.setEnabled(false);
+        btnSaveDetails.setVisibility(View.GONE);
     }
 
     public void update(Bundle bundleNew){
@@ -230,19 +250,34 @@ public class AddStudentFragment extends Fragment {
             case Constant.ADD:
                 selectButtonOperation=REQUEST_CODE_ADD;
                 list=(ArrayList<Student>) bundle.getSerializable(Constant.STUDENT_DATA_List);
-                mButtonSaveDetails.setText(Constant.ADDING);
-                mEditTextRollno.setEnabled(true);
+                btnSaveDetails.setText(Constant.ADDING);
+                etRollno.setEnabled(true);
                 break;
             case Constant.EDIT:
                 selectButtonOperation=REQUEST_CODE_EDIT;
-                mButtonSaveDetails.setText(Constant.BTN_CHANGE_TEXT_UPDATE);
+                btnSaveDetails.setText(Constant.BTN_CHANGE_TEXT_UPDATE);
                 editStudentDetail=(Student) bundle.getSerializable(Constant.STUDENT_DATA);
-                mEditTextName.setText(editStudentDetail.getmName().toUpperCase());
-                mEditTextRollno.setText(editStudentDetail.getRollNo().toUpperCase());
-                mEditTextRollno.setEnabled(false);
+                etName.setText(editStudentDetail.getmName().toUpperCase());
+                etRollno.setText(editStudentDetail.getRollNo().toUpperCase());
+                etRollno.setEnabled(false);
+                break;
+            default:
                 break;
         }
     }
-
-
+    public void callBack(String str) {
+        Toast.makeText(mContext,str,Toast.LENGTH_LONG).show();
+        mListener.communication(sendFragmentBundle);
+    }
+    //Inner broadcast receiver that receives the broadcast if the services have indeed added the elements in the database.
+    public class StudentBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(mContext,intent.getStringExtra(getString(message_received)),Toast.LENGTH_LONG).show();
+            if(bundle!=null)
+            {
+                mListener.communication(sendFragmentBundle);
+            }
+        }
+    }
 }

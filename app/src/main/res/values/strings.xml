@@ -31,4 +31,5 @@
     <string name="from_intent_service">from Intent Service</string>
     <string name="switcher">android:switcher:</string>
     <string name="error">must implement OnFragmentInteractionListener</string>
+    <string name="message_received" />
 </resources>

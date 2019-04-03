@@ -11,9 +11,11 @@ import com.example.studentmanagementsystem.database.StudentDBHelper;
 
 public class BackgroundSetData extends AsyncTask<String,Void, String> {
     private Context mContext;
+    private SendData sendData;
 
 
-    public BackgroundSetData(Context mContext) {
+    public BackgroundSetData(Context mContext,SendData sendData) {
+        this.sendData=sendData;
         this.mContext=mContext;
     }
 
@@ -24,8 +26,7 @@ public class BackgroundSetData extends AsyncTask<String,Void, String> {
 
     @Override
     protected void onPostExecute(String out) {
-        Toast.makeText(mContext,out,Toast.LENGTH_SHORT).show();
-
+        sendData.callBack(out);
     }
 
     @Override
@@ -50,5 +51,7 @@ public class BackgroundSetData extends AsyncTask<String,Void, String> {
         return null;
 
     }
-
+    public interface SendData{
+        public void callBack(String str);
+    }
 }

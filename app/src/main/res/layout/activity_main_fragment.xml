@@ -19,6 +19,7 @@
          android:id="@+id/tv_no_student"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
+         android:padding="@dimen/textview_padding_5dp"
          android:text="@string/no_student_yet"
          android:textSize="@dimen/tv_fontsize"
          android:layout_centerHorizontal="true"

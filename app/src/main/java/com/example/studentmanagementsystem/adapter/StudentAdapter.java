@@ -19,12 +19,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder   {
-        public TextView mTextViewName,mTextViewRollNo;
+        public TextView tvName,tvRollNo;
 
         public MyViewHolder(View view) {
             super(view);
-            mTextViewName = (TextView) view.findViewById(R.id.tv_studentName);
-            mTextViewRollNo = (TextView) view.findViewById(R.id.tv_studentRollno);
+            tvName = (TextView) view.findViewById(R.id.tv_studentName);
+            tvRollNo = (TextView) view.findViewById(R.id.tv_studentRollno);
         }
 
     }
@@ -48,13 +48,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull StudentAdapter.MyViewHolder viewHolder, int position) {
         Student student = studentArrayList.get(viewHolder.getAdapterPosition());
-        viewHolder.mTextViewName.setText(student.getmName());
-        viewHolder.mTextViewRollNo.setText(student.getRollNo());
+        ((MyViewHolder)viewHolder).tvName.setText(student.getmName());
+        ((MyViewHolder)viewHolder).tvRollNo.setText(student.getRollNo());
     }
 
     @Override
     public int getItemCount() {
         return studentArrayList.size();
     }
-
 }

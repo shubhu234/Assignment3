@@ -13,6 +13,7 @@
         android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/edittext_padding_5dp"
         android:layout_marginTop="@dimen/student_name_padding_top"
         android:hint="@string/enter_name"
         />
@@ -20,6 +21,7 @@
         android:id="@+id/et_rollno"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/edittext_padding_5dp"
         android:hint="@string/enter_roll_no"
         android:inputType="number"
         android:layout_below="@id/et_name"

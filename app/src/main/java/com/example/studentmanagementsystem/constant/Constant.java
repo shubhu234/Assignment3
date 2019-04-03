@@ -25,6 +25,7 @@ public class Constant {
     public static final String AYNC_TASK="ASYNC_TASK";
     public static final String SERVICE="SERVICE";
     public static final String INTENT_SERVICE="INTENT_SERVICE";
+    public static final String ACTION="Broadcast";
 
 
     public static final String STUDENT_DATA_List = "student_list";

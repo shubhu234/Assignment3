@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.studentmanagementsystem.adapter.ViewPagerAdapter;
 import com.example.studentmanagementsystem.fragment.AddStudentFragment;
@@ -21,7 +22,6 @@ import com.example.studentmanagementsystem.util.Communication;
 
 public class MainActivity extends AppCompatActivity implements Communication
 {
-
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements Communication
     }
 
     public void changeTab() {
-
         if(mViewPager.getCurrentItem()==0)
         {
             mViewPager.setCurrentItem(1);
@@ -49,9 +48,6 @@ public class MainActivity extends AppCompatActivity implements Communication
         {
             mViewPager.setCurrentItem(0);
         }
-
-
-
     }
     @Override
     public void communication(Bundle bundle) {
@@ -64,8 +60,10 @@ public class MainActivity extends AppCompatActivity implements Communication
         }else if(mViewPager.getCurrentItem()==1){
             String tag = getString(R.string.switcher) + R.id.view_pager + ":" + 0;
             MainFragment f = (MainFragment) getSupportFragmentManager().findFragmentByTag(tag);
-            f.update(bundle);
+            Log.d("come", "communication: ");
             changeTab();
+            f.update(bundle);
+
         }
     }
 }

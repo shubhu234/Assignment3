@@ -13,6 +13,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,18 +48,15 @@ public class MainFragment extends Fragment {
     private static final int VIEW = 0;
     private static final int EDIT = 1;
     private static final int DELETE = 2;
-    private Button mButtonAddStudent;
+    private Button btnAddStudent;
     private RecyclerView mRecyclerView;
     private StudentAdapter mAdapter;
     private Student student;
-    private TextView mTextViewNoStudent;
-    private Intent mIntentAddStudentDetail;
+    private TextView tvNoStudent;
     private int position1;
     private static final String itemDialog[] = {Constant.VIEW, Constant.EDIT, Constant.DELETE};
     private ArrayList<Student> studentArrayList = new ArrayList<>();
     private StudentDBHelper dbHelper;
-    private BackgroundTask backgroundTask;
-    private ViewPager viewPager;
     private Context mContext;
 
     public MainFragment() {
@@ -72,18 +70,15 @@ public class MainFragment extends Fragment {
         studentArrayList = dbHelper.getStudent();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_main_fragment, container, false);
 
-        //For initializing values and set up Adapter
         init();
 
-
         setHasOptionsMenu(true);
-        mButtonAddStudent.setOnClickListener(new View.OnClickListener() {
+       btnAddStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -96,8 +91,8 @@ public class MainFragment extends Fragment {
     }
 
     private void init() {
-        mTextViewNoStudent = (TextView)view.findViewById(R.id.tv_no_student);
-        mButtonAddStudent = view.findViewById(R.id.btn_addStudent);
+        tvNoStudent = (TextView)view.findViewById(R.id.tv_no_student);
+        btnAddStudent = view.findViewById(R.id.btn_addStudent);
         mRecyclerView = view.findViewById(R.id.rv_recyclerView);
 
         mAdapter = new StudentAdapter(studentArrayList);
@@ -105,10 +100,10 @@ public class MainFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
         if(studentArrayList.size()==0){
-            mTextViewNoStudent.setVisibility(View.VISIBLE);
+           tvNoStudent.setVisibility(View.VISIBLE);
         }
         else{
-            mTextViewNoStudent.setVisibility(View.GONE);
+            tvNoStudent.setVisibility(View.GONE);
         }
         recyclerViewHandler();
 
@@ -156,7 +151,7 @@ public class MainFragment extends Fragment {
         }));
     }
 
-    /*
+    /**
     method-delete to delete the student record from the student arraylist
     @param which-for selecting the mode
     @param position-student record at a particular position is deleted
@@ -174,7 +169,7 @@ public class MainFragment extends Fragment {
                 studentArrayList.remove(position);
                 Toast.makeText(getContext(), getString(R.string.constant_deleted), Toast.LENGTH_LONG).show();
                 if (studentArrayList.size() == Constant.NULL) {
-                    mTextViewNoStudent.setVisibility(View.VISIBLE);
+                    tvNoStudent.setVisibility(View.VISIBLE);
                 }
                 mAdapter.notifyDataSetChanged();
             }
@@ -215,8 +210,10 @@ public class MainFragment extends Fragment {
     }
 
 
-    //method-view to view the existing details of the student
-    //@param-which to select which mode it is
+    /**
+     *  method-view to view the existing details of the student
+     *  @param-which to select which mode it is
+     */
     private void view(int which)
     {
         Intent intent = new Intent(mContext, AddStudentActivity.class);
@@ -227,7 +224,7 @@ public class MainFragment extends Fragment {
         mContext.startActivity(intent);
     }
 
-    /*
+    /**
     method-onCreateOptionsMenu
     @param menu-a menu will be displayed on top of screen
     toggle switch-to switch between the grid and linear layout
@@ -279,13 +276,12 @@ public class MainFragment extends Fragment {
     }
 
     public void update(Bundle bundleFrom2Fragment){
-
         switch(bundleFrom2Fragment.getString(Constant.MODE)){
             case Constant.ADD:
                 int possitionInsertStudent = 0;
                 Student sudStudent = (Student) bundleFrom2Fragment.getSerializable(Constant.STUDENT_DATA);
                 studentArrayList.add(possitionInsertStudent, sudStudent);
-                if (mTextViewNoStudent.getVisibility() == View.VISIBLE) mTextViewNoStudent.setVisibility(View.GONE);
+                if (tvNoStudent.getVisibility() == View.VISIBLE) tvNoStudent.setVisibility(View.GONE);
                 mAdapter.notifyItemInserted(possitionInsertStudent);
                 Toast.makeText(mContext,Constant.ADD_TOAST,Toast.LENGTH_SHORT).show();
                 break;

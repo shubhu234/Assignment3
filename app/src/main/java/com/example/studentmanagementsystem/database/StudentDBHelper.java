@@ -20,7 +20,7 @@ public class StudentDBHelper extends SQLiteOpenHelper {
     public static final String STUDENT_COLUMN_ROLLNO = "_rollno";
     public static final String STUDENT_COLUMN_NAME = "name";
 
-    /*
+    /**
     Constructor of StudentDBHelper class
     @param - context
      */
@@ -44,7 +44,7 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /*
+    /**
     method- insertStudent to insert the details of student in the database
     @param- name of the student
     @param-rollno of the student
@@ -56,7 +56,7 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         contentValues.put(STUDENT_COLUMN_ROLLNO,rollno);
         db.insert(STUDENT_TABLE_NAME, null, contentValues);
     }
-     /*
+     /**
     method- updateStudent to update the details of student in the database
     @param- name of the student
     @param-rollno of the student
@@ -70,7 +70,7 @@ public class StudentDBHelper extends SQLiteOpenHelper {
 
      }
 
-    /*
+    /**
     method getStudent to get the details of the student
     @return it will return the arrayList in which the student details will be there
      */
@@ -96,7 +96,7 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         return res;
     }
 
-     /*
+     /**
         method- deleteStudent to delete the details of student in the database
         @param-rollno of the student
      */
