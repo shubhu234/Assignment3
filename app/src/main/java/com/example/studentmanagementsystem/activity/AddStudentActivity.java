@@ -39,4 +39,11 @@ public class AddStudentActivity extends AppCompatActivity implements Communicati
     @Override
     public void communication(Bundle bundle) {
     }
+
+    @Override
+    public void changeFragment() {
+
+    }
+
+
 }

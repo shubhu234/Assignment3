@@ -116,17 +116,24 @@ public class AddStudentFragment extends Fragment implements BackgroundSetData.Se
     }
 
     private void editButton() {
-        String name = etName.getText().toString().trim();
-        if (!Validate.isValidateName(name)) {
-            etName.setError("Enter Valid name");
-            error=false;
-        }
+        if(etRollno.getText().toString().equals(""))
+        {
+            Toast.makeText(mContext,"No student added",Toast.LENGTH_LONG).show();
+            clearEditText();
+            mListener.changeFragment();
+        }else {
+            String name = etName.getText().toString().trim();
+            if (!Validate.isValidateName(name)) {
+                etName.setError("Enter Valid name");
+                error = false;
+            }
 
-        if (error) {
-            Bundle editBundle=new Bundle();
-            editBundle.putString(Constant.NAME,name);
-            editBundle.putString(Constant.ROLLNO,etRollno.getText().toString());
-            generateDialogBox(etName.getText().toString(),etRollno.getText().toString(),Constant.EDIT,editBundle);
+            if (error) {
+                Bundle editBundle = new Bundle();
+                editBundle.putString(Constant.NAME, name);
+                editBundle.putString(Constant.ROLLNO, etRollno.getText().toString());
+                generateDialogBox(etName.getText().toString(), etRollno.getText().toString(), Constant.EDIT, editBundle);
+            }
         }
     }
 
@@ -163,10 +170,10 @@ public class AddStudentFragment extends Fragment implements BackgroundSetData.Se
         etName=(EditText)view.findViewById(R.id.et_name);
         etRollno=(EditText) view.findViewById(R.id.et_rollno);
     }
-    private void setTextOfEditText(Student student){
+    /*private void setTextOfEditText(Student student){
         etName.setText(student.getmName().toUpperCase());
        etRollno.setText(student.getRollNo().toUpperCase());
-    }
+    }*/
 
     private void generateDialogBox(final String name, final String rollNo, final String typeOfOperation,final Bundle sendBundle){
         sendBundle.putString(Constant.MODE,typeOfOperation);
@@ -214,6 +221,7 @@ public class AddStudentFragment extends Fragment implements BackgroundSetData.Se
         service.putExtra(Constant.ROLLNO,rollNo);
         service.putExtra(Constant.NAME,name);
         mContext.startService(service);
+        clearEditText();
     }
 
     @Override
@@ -265,9 +273,15 @@ public class AddStudentFragment extends Fragment implements BackgroundSetData.Se
                 break;
         }
     }
+    private void clearEditText()
+    {
+        etName.setText("");
+        etRollno.setText("");
+    }
     public void callBack(String str) {
         Toast.makeText(mContext,str,Toast.LENGTH_LONG).show();
         mListener.communication(sendFragmentBundle);
+        clearEditText();
     }
     //Inner broadcast receiver that receives the broadcast if the services have indeed added the elements in the database.
     public class StudentBroadcastReceiver extends BroadcastReceiver {

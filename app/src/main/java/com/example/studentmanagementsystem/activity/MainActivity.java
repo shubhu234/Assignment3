@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity implements Communication
 
         }
     }
+
+    @Override
+    public void changeFragment() {
+        changeTab();
+    }
 }
 
 
